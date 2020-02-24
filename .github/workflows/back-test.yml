@@ -11,6 +11,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Cd to back-end
       run: cd tasky-back
+    - name: Ls for sanity
+      run: ls
     - name: install npm dependencies
       run: npm install
     - name: test run
