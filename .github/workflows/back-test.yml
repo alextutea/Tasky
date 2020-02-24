@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cd to back-end
+      run: cd tasky-back
+    - name: Run a one-line script
+      run: npm install
+    - name: Run a multi-line script
+      run: npm run dev
