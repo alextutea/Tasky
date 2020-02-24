@@ -6,11 +6,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Cd to back-end
-      run: cd tasky-back
+    - working-directory: ./tasky-back
     - name: Ls for sanity
       run: ls
     - name: install npm dependencies
