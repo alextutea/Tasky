@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Ls for sanity
-      run: ls
-      working-directory: ./tasky-back
     - name: install npm dependencies
       run: npm install
       working-directory: ./tasky-back
