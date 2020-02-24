@@ -38,7 +38,7 @@
     </v-app-bar>
 
     <v-content>
-      <TaskList v-bind:howMany="4" />
+      <TaskList v-bind:howMany="3" />
     </v-content>
   </v-app>
 </template>

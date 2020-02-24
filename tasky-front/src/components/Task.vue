@@ -11,11 +11,10 @@
             dark
           >
             <v-card-title class="headline">{{cardTitle}}</v-card-title>
-
-            <v-card-subtitle>{{cardContent}}</v-card-subtitle>
-
+            <v-card-subtitle>{{cardAuthor}}</v-card-subtitle>
+            <v-card-text>{{cardContent}}</v-card-text>
             <v-card-actions>
-              <v-btn text>{{cardAuthor}}</v-btn>
+              <v-btn text>Delete</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

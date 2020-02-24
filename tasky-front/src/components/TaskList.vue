@@ -1,6 +1,5 @@
 <template>
   <div class="tasklist">
-    <h3>Task List</h3>
     <Task v-for="n in howMany" :key="n" card-title="Some Title" card-author="Alex" card-content="Some content"/>
   </div>
 </template>
