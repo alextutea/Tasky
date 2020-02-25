@@ -8,4 +8,4 @@ app.use(cors())
 
 app.get('/', (req, res) => res.status(200).send(`Welcome to Tasky!`))
 
-app.listen(port, () => console.log(`Server is listening to port ${port}!`))
+app.listen(port, () => console.log(`Server listening to port ${port}!`))
