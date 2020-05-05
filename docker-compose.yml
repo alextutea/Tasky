@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  tasky-network:
+    driver: bridge
+
+volumes:
+    mongo-node:
+
+services:
+    mongo-node:
+        container_name: mongo-node
+        build: mongo
+        restart: always
+        ports:
+            - '27017:27017'
+        networks:
+            - tasky-network
+        volumes:
+            - mongo-node:/var/lib/mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=ASDqwe123
+            - MONGO_INITDB_DATABASE=admin
+
+    tasky-back:
+        container_name: tasky-back
+        restart: always
+        build: tasky-back
+        ports:
+            - 3000:3000
+        networks:
+            - tasky-network
+    #    logging:
+    #      driver: "none"
