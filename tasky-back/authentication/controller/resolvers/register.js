@@ -1,6 +1,7 @@
 var bcrypt = require('bcryptjs');
+const User = require("../../../users/model/user.js");
 
-const {addUser} = require("../../users/controller/utils/crud")
+const {addUser} = require("../../../users/controller/utils/crud.js")
 
 const register = async (req, res) => {
     const {email, password, username} = req.body;

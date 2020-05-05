@@ -1,6 +1,7 @@
 var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {jwtSignature} = require("../middleware/jwtVerification.js");
+const User = require("../../../users/model/user.js");
 
 const login = async (req, res) => {
     console.log("Trying to log user in...");

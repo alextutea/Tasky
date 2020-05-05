@@ -23,6 +23,15 @@ services:
             - MONGO_INITDB_ROOT_PASSWORD=ASDqwe123
             - MONGO_INITDB_DATABASE=admin
 
+    console-client:
+        container_name: console-client
+        build: console-client
+        ports:
+            - 8080:8080
+        networks:
+            - tasky-network
+        command: tail -F anything #keeps it running
+
     tasky-back:
         container_name: tasky-back
         restart: always
