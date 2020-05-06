@@ -8,14 +8,21 @@ const login = async (req, res) => {
     const {email, password} = req.body;
 
     const userFound = await User.findOne({'email': email});
-    const validPassword = await bcrypt.compare(password, userFound.password);
+    var validCredentials = false;
 
-    if(!userFound || !validPassword){
+    if(userFound){
+        const validPassword = await bcrypt.compare(password, userFound.password);
+        if(validPassword){
+            validCredentials = true;
+        }
+    }
+
+    if(!validCredentials){
         console.log("Bad client input: Bad credentials!");
         if(!userFound){
             console.log("Bad email");
         }
-        if(!validPassword){
+        else if(!validPassword){
             console.log("Bad password");
         }
         return res.status(400).send("This combination of email and password does not exist!");
@@ -26,6 +33,9 @@ const login = async (req, res) => {
     
     // send as JSON and get it from front-end
     res.status(201).json({
+        username: userFound.username,
+        email: userFound.email,
+        level: userFound.level,
         authorization: token
     }).send();
 
