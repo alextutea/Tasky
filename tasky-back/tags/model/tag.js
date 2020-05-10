@@ -12,7 +12,7 @@ const tagSchema = new mongoose.Schema({
     color: {
         type: String,
         validator: [colorValidator, 'Invalid color'],
-        required: true,
+        required: true
     }
 });
 
