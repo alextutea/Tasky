@@ -8,10 +8,11 @@ const login = async (req, res) => {
     const {email, password} = req.body;
 
     const userFound = await User.findOne({'email': email});
+    var validPassword = null;
     var validCredentials = false;
 
     if(userFound){
-        const validPassword = await bcrypt.compare(password, userFound.password);
+        validPassword = await bcrypt.compare(password, userFound.password);
         if(validPassword){
             validCredentials = true;
         }
@@ -28,7 +29,7 @@ const login = async (req, res) => {
         return res.status(400).send("This combination of email and password does not exist!");
     }
     // Create and assign a JSON Web Token (string should be replaced by .env variable)
-    const token = jwt.sign({_id: userFound._id}, jwtSignature);
+    const token = jwt.sign({id: userFound.id}, jwtSignature);
     // res.set('authorization', `${token}`).send();  // Normal way to send in header
     
     // send as JSON and get it from front-end

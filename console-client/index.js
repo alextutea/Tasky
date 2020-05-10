@@ -24,19 +24,78 @@ async function main(){
         }
         else {
             if(command==="register"){
-                await register(args[1], args[2], args[3]);
+                await register(args[1], args[2], args[3]).then(
+                    response => {
+                        console.log(response.data);
+                    },
+                    reason => {
+                        console.log(reason.data);
+                    }
+
+                );
             }
             if(command==="login"){
-                await login(args[1], args[2]);
+                await login(args[1], args[2]).then(
+                    response => {
+                        console.log(response.data);
+                    },
+                    reason => {
+                        console.log(reason.data);
+                    }
+
+                );
             }
             if(command==="connection-test"){
-                await test();
+                await test().then(
+                    response => {
+                        console.log(response.data);
+                    },
+                    reason => {
+                        console.log(reason.data);
+                    }
+
+                );
             }
             if(command==="user-token-test"){
-                await userTokenTest();
+                await userTokenTest().then(
+                    response => {
+                        console.log(response.data);
+                    },
+                    reason => {
+                        console.log(reason.data);
+                    }
+
+                );
+            }
+            if(command==="get-all-users"){
+                await getUsers().then(
+                    response => {
+                        console.log(response.data);
+                    },
+                    reason => {
+                        console.log(reason.data);
+                    }
+                )
             }
         }
     }
+}
+
+function getUsers(){
+    return new Promise(
+        (resolve, reject) => {
+            axios.get(`http://tasky-back:${port}/users/`, {headers: headers}).then(
+                response => {
+                    console.log("Successfully retrieved user data!");
+                    resolve(response);
+                },
+                reason => {
+                    console.log("Failed to retrieve user data!");
+                    reject(reason);
+                }
+            )
+        }
+    )
 }
 
 function setAuthToken(token){
@@ -86,14 +145,14 @@ function question(q){
 function register(email, password, username){
     return new Promise(
         async (resolve, reject) => {
-            axios.post(`http://tasky-back:${port}/user/register`, {email, password, username}).then(
+            axios.post(`http://tasky-back:${port}/auth/register`, {email, password, username}).then(
                 response => {
                     console.log("Successfully registered!");
-                    resolve();
+                    resolve(response);
                 },
                 reason => {
                     console.log("Failed to register!");
-                    reject();
+                    reject(reason);
                 }
             )
         }
@@ -105,14 +164,10 @@ function test(){
         async (resolve, reject) => {
             axios.get(`http://tasky-back:${port}/`).then(
                 response => {
-                    console.log("Successfully registered!");
-                    console.log(response.data);
-                    resolve();
+                    resolve(response);
                 },
                 reason => {
-                    console.log("Failed to register!");
-                    console.log(reason);
-                    reject();
+                    reject(reason);
                 }
             )
         }
@@ -122,16 +177,14 @@ function test(){
 function userTokenTest(){
     return new Promise(
         async (resolve, reject) => {
-            axios.post(`http://tasky-back:${port}/user/sayHello`, {}, {headers: headers}).then(
+            axios.post(`http://tasky-back:${port}/auth/sayHello`, {}, {headers: headers}).then(
                 response => {
                     console.log("Successfully registered!");
-                    console.log(response.data);
-                    resolve();
+                    resolve(response);
                 },
                 reason => {
                     console.log("Failed to register!");
-                    console.log(reason);
-                    reject();
+                    reject(reason);
                 }
             )
         }
@@ -141,25 +194,28 @@ function userTokenTest(){
 function login(email, password){
     return new Promise(
         async (resolve, reject) => {
-            receivedToken = null;
-            await axios.post(`http://tasky-back:${port}/user/login`, {email, password}).then(
+            var receivedResponse = null;
+            var receivedReason = null;
+            var receivedToken = null;
+            await axios.post(`http://tasky-back:${port}/auth/login`, {email, password}).then(
                 response => {
                     console.log("Successfully logged in. Got the token!");
                     receivedToken = response.data.authorization;
                     receivedUsername = response.data.username;
+                    receivedResponse = response;
                 },
-                reject => {
+                reason => {
                     console.log("Failed to log in. Token not received");
-                    console.log(reject);
+                    receivedReason = reason;
                 }
             )
             if(!receivedToken) {
-                reject();
+                reject(receivedReason);
                 return;
             }
             await setAuthToken(receivedToken);
             await setActiveUsername(receivedUsername);
-            resolve();
+            resolve(receivedResponse);
         }
     )
 }

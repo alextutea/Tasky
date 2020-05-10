@@ -14,7 +14,7 @@ const jwtVerify = (req, res, next) => {
     // Check if valid token
     try {
         const verified = jwt.verify(token, jwtSignature);
-        req.body.authUserId = verified;
+        req.body.authUser = verified;
         console.log('Successfully authorized token!');
         next();
     } catch(err) {

@@ -12,7 +12,7 @@ const addUser = (username, email, password) => {
             try {
                 await newUser.save();
                 resolve({
-                    id: newUser._id,
+                    id: newUser.id,
                     username: newUser.username,
                     email: newUser.email,
                     level: newUser.level
