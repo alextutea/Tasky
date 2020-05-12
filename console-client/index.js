@@ -1,5 +1,7 @@
 const axios = require('axios');
 const readline = require('readline');
+const dotenv = require("dotenv");
+dotenv.config();
 
 var cachedToken = null;
 var cachedUsername = null;
@@ -23,6 +25,17 @@ async function main(){
             exit = true;
         }
         else {
+            await CommandManager.execute(command, args).then(
+                response => {
+                    for(cookie in response.updatedCookies){
+                        permaCookies[cookie] = response.updatedCookies[cookie]
+                    }
+                    console.log(response.data);
+                },
+                reason => {
+                    console.log(reason.data);
+                }
+            )
             if(command==="register"){
                 await register(args[1], args[2], args[3]).then(
                     response => {
