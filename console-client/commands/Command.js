@@ -1,7 +1,23 @@
 class Command {
     constructor(identifier, method){
-        this.identifier = identifier;
-        this.method = method;
+        this._identifier = identifier;
+        this._method = method;
+    }
+
+    get identifier(){
+        return this._identifier;
+    }
+
+    set identifier(identifier){
+        this._identifier = identifier;
+    }
+
+    get method(){
+        return this._method;
+    }
+
+    set method(method){
+        this._method = method
     }
 }
 

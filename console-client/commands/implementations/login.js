@@ -1,11 +1,27 @@
+const axios = require('axios');
 const Command = require("../Command.js");
+const dotenv = require("dotenv");
+dotenv.config();
 const port = process.env.TARGET_PORT || 4000;
+const {validateArgCount} = require("../utils/argsValidator.js")
 
 const loginCommand = new Command("login", (args) => {
-    var email = args[1];
-    var password = args[2];
     return new Promise(
         async (resolve, reject) => {
+            var validArgs = false;
+            await validateArgCount(args, 2).then(
+                response => {
+                    validArgs = true;
+                },
+                reason => {
+                    return reject(reason);
+                }
+            )
+            if(!validArgs){
+                return;
+            }
+            var email = args[1];
+            var password = args[2];
             var receivedResponse = null;
             var receivedReason = null;
             var receivedToken = null;
@@ -22,20 +38,13 @@ const loginCommand = new Command("login", (args) => {
                 }
             )
             if(!receivedToken) {
-                response = {
-                    apiResponse: receivedReason
-                }
-                reject(response)
-                return;
+                return reject(receivedReason);
             }
-            response = {
-                apiResponse: receivedResponse,
-                updatedCookies: {
-                    token: receivedToken,
-                    username: receivedUsername
-                }
+            receivedResponse.updatedCookies = {
+                token: receivedToken,
+                username: receivedUsername
             }
-            resolve(response);
+            resolve(receivedResponse);
         }
     )
 });
