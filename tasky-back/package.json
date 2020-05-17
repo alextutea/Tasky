@@ -5,15 +5,24 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "echo \"Warning: no test specified\" && exit 0"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Alex Tutea",
   "license": "MIT",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "devDependencies": {
+    "cross-env": "^7.0.2",
+    "jest": "^26.0.1",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

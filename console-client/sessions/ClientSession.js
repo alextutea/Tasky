@@ -1,10 +1,15 @@
 const readline = require('readline');
 
+// var headers = {
+//     'Content-Type': 'application/json',
+//     'Authorization': cachedToken
+// };
+
 class ClientSession{
     constructor(targetPort, commandManager){
-        this.cookies = {};
-        this.port = targetPort;
-        this.commandManager = commandManager;
+        this._cookies = {};
+        this._port = targetPort;
+        this._commandManager = commandManager;
     }
 
     start(){
@@ -47,6 +52,22 @@ class ClientSession{
                 }
             }
         )
+    }
+
+    get cookies(){
+        return this._cookies;
+    }
+
+    set cookies(cookies){
+        this._cookies = cookies;
+    }
+
+    get commandManager(){
+        return this._commandManager;
+    }
+
+    get port(){
+        return this._port;
     }
 }
 

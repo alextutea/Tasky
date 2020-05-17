@@ -6,10 +6,10 @@ class CommandManager {
         require("fs").readdirSync(normalizedPath).forEach((file) => {
             commands.push(require("./implementations/" + file));
         });
-        this.commands = commands;
-        this.commandDictionary = {};
+        this._commands = commands;
+        this._commandDictionary = {};
         for(var command of commands){
-            this.commandDictionary[command.identifier] = command;
+            this._commandDictionary[command.identifier] = command;
         }
     }
 
@@ -25,6 +25,10 @@ class CommandManager {
                 }
             )
         }
+    }
+
+    get commandDictionary(){
+        return this._commandDictionary;
     }
 }
 

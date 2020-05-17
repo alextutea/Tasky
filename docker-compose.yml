@@ -10,18 +10,19 @@ volumes:
 services:
     mongo-node:
         container_name: mongo-node
-        build: mongo
+        image: mongo:latest
         restart: always
         ports:
             - '27017:27017'
         networks:
             - tasky-network
-        volumes:
-            - mongo-node:/var/lib/mongo
         environment:
             - MONGO_INITDB_ROOT_USERNAME=root
             - MONGO_INITDB_ROOT_PASSWORD=ASDqwe123
-            - MONGO_INITDB_DATABASE=admin
+            - MONGO_INITDB_DATABASE=root-db
+        volumes:
+            - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            
 
     console-client:
         container_name: console-client

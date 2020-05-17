@@ -5,10 +5,7 @@ dotenv.config();
 
 var port = 3000
 
-var headers = {
-    'Content-Type': 'application/json',
-    'Authorization': cachedToken
-};
+
 main();
 
 async function main(){
