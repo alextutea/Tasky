@@ -1,0 +1,16 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the docker-compose stack
+      run: docker-compose up --build
+    - name: Check running containers
+      run: docker ps -a
+    - name: Run test suite
+      run: docker exec tasky-back npm run test
