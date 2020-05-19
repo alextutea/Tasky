@@ -1,27 +1,14 @@
-const env = require("../utils/env.js")
+const env = require("../../utils/env.js");
 const port = env.PORT;
+const setupTestServer = require("../utils/setupTestServer.js");
 const axios = require('axios');
-const {setupTestDB, removeAllCollections, dropAllCollections} = require("./utils/testDbUtils.js");
-const User = require("../users/model/user.js");
-const mongoose = require("mongoose");
-const app = require("../app.js");
-var server;
+const User = require("../../users/model/user.js");
+
 
 describe('Register', () => {
-    beforeAll(async () => {
-        server = app.listen(port);
-        await setupTestDB();
-    })
+
+    setupTestServer(port);
     
-    afterEach(async () => {
-        await removeAllCollections();
-    })
-    
-    afterAll(async () => {
-        await dropAllCollections();
-        await mongoose.connection.close();
-        await server.close();
-    })
     it('Should add a valid user to the database', async () => {
         const email = "test-user1@email.com";
         const password = "ASDqwe123";
@@ -32,6 +19,7 @@ describe('Register', () => {
         expect(user.email).toBe(email);
         expect(user.level).toBeTruthy();
     })
+    
     it('Should respond back to the client with the proper status and data after adding a valid user', async () => {
         const email = "test-user1@email.com";
         const password = "ASDqwe123";
