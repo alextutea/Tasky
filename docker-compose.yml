@@ -41,5 +41,6 @@ services:
             - 3000:3000
         networks:
             - tasky-network
+        command: tail -F anything #keeps it running
     #    logging:
     #      driver: "none"

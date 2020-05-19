@@ -15,4 +15,4 @@ EXPOSE 3000
 
 # CMD ["jest"]
 #CMD ["npm", "run", "test"]
-CMD ["npm", "run", "test"]
+#CMD ["npm", "run", "dev"]
