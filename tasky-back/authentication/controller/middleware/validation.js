@@ -33,12 +33,16 @@ const registerDataValidation = data => {
   const schema = Joi.object({
     email: Joi.string()
       .min(6)
+      .max(64)
       .required()
       .email(),
     username: Joi.string()
-      .required(),
+      .required()
+      .min(3)
+      .max(64),
     password: Joi.string()
       .min(6)
+      .max(1024)
       .required()
   });
   return schema.validate(data);

@@ -9,7 +9,7 @@ const register = async (req, res) => {
     var emailExists = await User.findOne({'email': email});
     if(emailExists){
         console.log("Bad client input: Email already exists.");
-        return res.status(400).send("This email is already associated with an account.");
+        return res.status(400).send({err: "This email is already associated with an account."});
     } 
     
     const salt = await bcrypt.genSalt(10);
